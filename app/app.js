@@ -97,7 +97,7 @@ function renderListings(features) {
 // //    filterEl.parentNode.style.display = "none";
 
 //     // remove features filter***
-//     map.setFilter("countries_latest", ["has", "id_gaul"]);
+//     map.setFilter("countries_25112021", ["has", "id_gaul"]);
 //   }
 }
 
@@ -201,6 +201,7 @@ var country_th_mammals = 0;
 var country_amphibians = 0;
 var country_th_amphibians = 0;
 var country_birds = 0;
+var country_th_birds = 0;
 
 var country_carbon_pa = 0;
 var country_water_pa = 0;
@@ -211,6 +212,7 @@ var country_th_mammals_pa = 0;
 var country_amphibians_pa = 0;
 var country_th_amphibians_pa = 0;
 var country_birds_pa = 0;
+var country_th_birds_pa = 0;
 
 map.on('load', function() {
 
@@ -289,13 +291,13 @@ var miolayer = map.getLayer('point');
       }, 'waterway-label');
       
       map.addLayer({
-        "id": "countries_latest",
+        "id": "countries_25112021",
         "type": "fill",
         "source": {
             "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:countries_latest&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:countries_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
             },
-        "source-layer": "countries_latest",
+        "source-layer": "countries_25112021",
   
         'paint': { 
           'fill-color': '#618135',
@@ -338,9 +340,9 @@ var miolayer = map.getLayer('point');
         "type": "circle",
         "source": {
             "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
             },
-        "source-layer": "points_3857",
+        "source-layer": "points_3857_25112021",
         'paint': {
           // make circles larger as the user zooms from z12 to z22
           'circle-radius': {
@@ -389,9 +391,9 @@ var miolayer = map.getLayer('point');
         "type": "circle",
         "source": {
             "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
             },
-        "source-layer": "points_3857",
+        "source-layer": "points_3857_25112021",
         'paint': {
           // make circles larger as the user zooms from z12 to z22
           'circle-radius': {
@@ -715,7 +717,7 @@ var miolayer = map.getLayer('point');
       
 
     map.on("moveend", function () {
-    var features = map.queryRenderedFeatures({ layers: ["countries_latest"] });
+    var features = map.queryRenderedFeatures({ layers: ["countries_25112021"] });
 
     if (features) {
       var uniqueFeatures = getUniqueFeatures(features, "adm0_code");
@@ -731,7 +733,7 @@ var miolayer = map.getLayer('point');
     }
   });
 
-  map.on("mousemove", "countries_latest", function (e) {
+  map.on("mousemove", "countries_25112021", function (e) {
     // Change the cursor style as a UI indicator.
     map.getCanvas().style.cursor = "pointer";
 
@@ -747,6 +749,7 @@ var miolayer = map.getLayer('point');
     var amphibians = e.features[0].properties.amp_a;
     var amphi_th = e.features[0].properties.th_amp_a;
     var birds = e.features[0].properties.birds_a; 
+    var birds_th = e.features[0].properties.th_birds_a; 
 
     var carbon_w = carbon*100;
     var water_w = water*100;
@@ -757,7 +760,7 @@ var miolayer = map.getLayer('point');
     var amphibians_w = amphibians*100;
     var amphi_th_w = amphi_th*100;
     var birds_w = birds*100; 
-
+    var birds_th_w = birds_th*100;
     popup.setLngLat(e.lngLat).setHTML(
           " <ul><li><div id = 'country_scores_main_b'>Biodiversity Resources for <b>"+country_name+"</b></div>"+
                 "<div><span class = 'coll_item_title' > Carbon ("+carbon.toLocaleString()+")</span>"+
@@ -777,13 +780,15 @@ var miolayer = map.getLayer('point');
                   "<span class = 'coll_item_title' > Threatened Amphibians Richness ("+amphi_th.toLocaleString()+")</span>"+
                   "<div id='progressbar'><div style='width:"+amphi_th_w+"%'></div></div>"+
                   "<span class = 'coll_item_title' > Birds Richness ("+birds.toLocaleString()+")</span>"+
-                  "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+          
+                  "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+         
+                  "<span class = 'coll_item_title' > Threatened Birds Richness ("+birds_th.toLocaleString()+")</span>"+
+                  "<div id='progressbar'><div style='width:"+birds_th_w+"%'></div></div>"+        
                   "</div></li></ul>"
 
         ).addTo(map);
   });
 
-  map.on("mouseleave", "countries_latest", function () {
+  map.on("mouseleave", "countries_25112021", function () {
     map.getCanvas().style.cursor = "";
     map.getCanvas().style.cursor = "";
     popup.remove();
@@ -848,6 +853,7 @@ var mammals_th = e.features[0].properties.mammals_th;
 var amphibians = e.features[0].properties.amphibians;
 var amphi_th = e.features[0].properties.amphi_th;
 var birds = e.features[0].properties.birds; 
+var birds_th = e.features[0].properties.birds_th; 
 
 var carbon_w = (e.features[0].properties.carbon)*100;
 var water_w = (e.features[0].properties.water)*100;
@@ -858,6 +864,7 @@ var mammals_th_w = (e.features[0].properties.mammals_th)*100;
 var amphibians_w = (e.features[0].properties.amphibians)*100;
 var amphi_th_w = (e.features[0].properties.amphi_th)*100;
 var birds_w = (e.features[0].properties.birds)*100; 
+var birds_th_w = (e.features[0].properties.birds_th)*100; 
 // Ensure that if the map is zoomed out such that multiple
 // copies of the feature are visible, the popup appears
 // over the copy being pointed to.
@@ -887,7 +894,9 @@ popup.setLngLat(coordinates).setHTML(
           "<span class = 'coll_item_title' > Threatened Amphibians Richness ("+amphi_th.toLocaleString()+")</span>"+
           "<div id='progressbar'><div style='width:"+amphi_th_w+"%'></div></div>"+
           "<span class = 'coll_item_title' > Birds Richness ("+birds.toLocaleString()+")</span>"+
-          "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+          
+          "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+        
+          "<span class = 'coll_item_title' > Threatened Birds Richness ("+birds_th.toLocaleString()+")</span>"+
+          "<div id='progressbar'><div style='width:"+birds_th_w+"%'></div></div>"+    
          
           "</div></li></ul>"
 
@@ -905,7 +914,7 @@ popup.remove();
 var layer_country = document.getElementById('layer_country');
 layer_country.addEventListener('change', function() {
   var layer_country_value = document.getElementById('layer_country').value;
-  map.setPaintProperty('countries_latest', 'fill-color', ['interpolate',['linear'],['get', layer_country_value],0, '#ffffd4',10, '#ffefb5',50, '#ffde96',100, '#fec46c',150, '#fea73f',250, '#f68c23',350, '#e67217',500, '#d25a0c',750, '#b64708',1000, '#993404']);
+  map.setPaintProperty('countries_25112021', 'fill-color', ['interpolate',['linear'],['get', layer_country_value],0, '#ffffd4',10, '#ffefb5',50, '#ffde96',100, '#fec46c',150, '#fea73f',250, '#f68c23',350, '#e67217',500, '#d25a0c',750, '#b64708',1000, '#993404']);
 });
 
 
@@ -928,6 +937,7 @@ var max_forest = 0
 var max_mammals = 0
 var max_amphibians = 0
 var max_birds = 0
+var max_th_birds = 0
 var max_th_mammals = 0
 var max_th_amphibians = 0
 
@@ -938,6 +948,7 @@ var min_forest = 0
 var min_mammals = 0
 var min_amphibians = 0
 var min_birds = 0
+var min_th_birds = 0
 var min_th_mammals = 0
 var min_th_amphibians = 0
 
@@ -947,7 +958,7 @@ var mean_natural = 0
 var mean_forest = 0
 var mean_mammals = 0
 var mean_amphibians = 0
-var mean_birds = 0
+var mean_th_birds = 0
 var mean_th_mammals = 0
 var mean_th_amphibians = 0
 
@@ -1008,6 +1019,12 @@ function birds_max(){
         return max
 };
 
+function th_birds_max(){
+  var features = map.queryRenderedFeatures({ layers: ['grid_points_3'] });
+  var vals = features.map(f => f.properties.birds_th);
+  var max = Math.max.apply(null, vals);
+  return max
+};
 
 
 
@@ -1068,7 +1085,12 @@ function birds_min(){
         var min = Math.min.apply(null, vals);
         return min
 };
-
+function th_birds_min(){
+  var features = map.queryRenderedFeatures({ layers: ['grid_points_3'] });
+  var vals = features.map(f => f.properties.birds_th);
+  var min = Math.min.apply(null, vals);
+  return min
+};
 
 
 
@@ -1164,6 +1186,16 @@ function birds_mean(){
       return mean
 };
 
+function th_birds_mean(){
+  var features = map.queryRenderedFeatures({ layers: ['grid_points_3'] });
+  var vals = features.map(f => f.properties.birds_th);
+  var total = 0;
+    for(var i = 0; i < vals.length; i++) {
+        total += vals[i];
+    }
+    var mean = total / vals.length;  
+    return mean
+};
 
 // mario
 
@@ -1209,6 +1241,10 @@ $("#country_name").click(function(){
       $('#birds_slider').val(1);
       $('.delvarico-birds').html("clear");
       $('.range-field-birds').css('opacity', '1');
+      $("#birds_th_value").html(1);
+      $('#birds_th_slider').val(1);
+      $('.delvarico-th_birds').html("clear");
+      $('.range-field-th_birds').css('opacity', '1');
 
     $('#carbon_slider').val(1);
     $('#water_slider').val(1);
@@ -1219,6 +1255,7 @@ $("#country_name").click(function(){
     $('#amphibians_slider').val(1);
     $('#amphibians_th_slider').val(1);
     $('#birds_slider').val(1);
+    $('#birds_th_slider').val(1);
     
 
     });
@@ -1237,7 +1274,7 @@ setTimeout(function(){
 
   
 
-  map.on('click', 'countries_latest', function(e) {
+  map.on('click', 'countries_25112021', function(e) {
 
     window.history.replaceState(null, null, "?iso3="+e.features[0].properties.iso3);
     var pa_bb_url = "https://geospatial.jrc.ec.europa.eu/geoserver/wfs?request=getfeature&version=1.0.0&service=wfs&typename=dopa_explorer_3:global_dashboard&propertyname=iso3_digit&SORTBY=iso3_digit&CQL_FILTER=iso3_digit='"+e.features[0].properties.iso3+"'&outputFormat=application%2Fjson";
@@ -1345,7 +1382,11 @@ setTimeout(function(){
     $("#birds_value").html(carbon);
     $('#submit').css('background-color','#bd6116').css('color','#ffffff')
   });
-
+  $("#birds_th_slider").on("input", function() {
+    var carbon = this.value;
+    $("#birds_th_value").html(carbon);
+    $('#submit').css('background-color','#bd6116').css('color','#ffffff')
+  });
 
       if (e.features.length > 0) {
 
@@ -1401,6 +1442,11 @@ setTimeout(function(){
              country_birds = feature.properties.birds_a;
               return country_birds;
           }
+          function c_th_birds () {
+            var feature = e.features[0];
+             country_th_birds = feature.properties.th_birds_a;
+              return country_th_birds;
+          }
           function c_th_amphibians () {
             var feature = e.features[0];
              country_th_amphibians = feature.properties.th_amp_a;
@@ -1448,6 +1494,11 @@ setTimeout(function(){
              country_birds_pa = feature.properties.birds_a_p;
               return country_birds_pa;
           }
+          function c_th_birds_pa () {
+            var feature = e.features[0];
+             country_th_birds_pa = feature.properties.th_birds_a_p;
+              return country_th_birds_pa;
+          }
           function c_th_amphibians_pa () {
             var feature = e.features[0];
              country_th_amphibians_pa = feature.properties.th_amp_a_p;
@@ -1467,8 +1518,9 @@ setTimeout(function(){
       var amphibians_f = feature.properties.amp_a;
       var th_amphibians_f = feature.properties.th_amp_a;
       var birds_f = feature.properties.birds_a;
+      var th_birds_f = feature.properties.th_birds_a;
  
-      var all_country_avg_val = parseFloat(carbon_f+water_f+natural_f+forest_f+mammals_f+th_mammals_f+amphibians_f+th_amphibians_f+birds_f)
+      var all_country_avg_val = parseFloat(carbon_f+water_f+natural_f+forest_f+mammals_f+th_mammals_f+amphibians_f+th_amphibians_f+birds_f+th_birds_f)
 
       var carbon_f_p = feature.properties.carbon_a_p;
       var water_f_p = feature.properties.water_a_p;
@@ -1479,8 +1531,9 @@ setTimeout(function(){
       var amphibians_f_p = feature.properties.amp_a_p;
       var th_amphibians_f_p = feature.properties.th_amp_a_p;
       var birds_f_p = feature.properties.birds_a_p;
+      var th_birds_f_p = feature.properties.th_birds_a_p;
 
-      var pa_country_avg_val = parseFloat(carbon_f_p+water_f_p+natural_f_p+forest_f_p+mammals_f_p+th_mammals_f_p+amphibians_f_p+th_amphibians_f_p+birds_f_p)
+      var pa_country_avg_val = parseFloat(carbon_f_p+water_f_p+natural_f_p+forest_f_p+mammals_f_p+th_mammals_f_p+amphibians_f_p+th_amphibians_f_p+birds_f_p+th_birds_f_p)
 
       //var perc_bio_prot = (100*pa_country_avg_val)/(all_country_avg_val+pa_country_avg_val)
 
@@ -1493,6 +1546,7 @@ setTimeout(function(){
       var amphibians_f_w = (amphibians_f*100);
       var th_amphibians_f_w= (th_amphibians_f*100);
       var birds_f_w = (birds_f*100);
+      var th_birds_f_w = (th_birds_f*100);
 
       var carbon_f_w_p = (carbon_f_p*100);
       var water_f_w_p = (water_f_p*100);
@@ -1503,6 +1557,7 @@ setTimeout(function(){
       var amphibians_f_w_p = (amphibians_f_p*100);
       var th_amphibians_f_w_p= (th_amphibians_f_p*100);
       var birds_f_w_p= (birds_f_p*100);
+      var th_birds_f_w_p= (th_birds_f_p*100);
 
 
 
@@ -1543,6 +1598,9 @@ setTimeout(function(){
           "<span class = 'coll_item_title' > Birds Richness </span>"+
           "<div id='progressbar'><div style='width:"+birds_f_w+"%'></div><em class = 'value_bar_c'>"+birds_f.toFixed(2)+"</em> <em class = 'value_bar_p'> "+birds_f_p.toFixed(2)+"</em></div>"+          
           "<div id='progressbar_p'><div style='width:"+birds_f_w_p+"%'></div></div>"+      
+          "<span class = 'coll_item_title' >Threatened Birds Richness </span>"+
+          "<div id='progressbar'><div style='width:"+th_birds_f_w+"%'></div><em class = 'value_bar_c'>"+th_birds_f.toFixed(2)+"</em> <em class = 'value_bar_p'> "+th_birds_f_p.toFixed(2)+"</em></div>"+          
+          "<div id='progressbar_p'><div style='width:"+th_birds_f_w_p+"%'></div></div>"+  
           "</div></li></ul>");
 
       $('#custom_map_tools').empty().append("<div id = 'dddd'><div id ='btn_maps'>"+ 
@@ -1572,7 +1630,7 @@ setTimeout(function(){
 }
 
       //  var coordinates = feature.geometry.coordinates;
-      var cfeatures = map.queryRenderedFeatures(e.point, { layers: ['countries_latest'] });
+      var cfeatures = map.queryRenderedFeatures(e.point, { layers: ['countries_25112021'] });
       var filter = cfeatures.reduce(function(memo, feature) {
              memo.push(feature.properties.adm0_code);
              return memo;
@@ -1580,7 +1638,7 @@ setTimeout(function(){
              bounds.extend(feature.geometry.coordinates);
              map.fitBounds(bounds);
          }, ['!in', 'adm0_code']);
-         map.setFilter("countries_latest", filter);
+         map.setFilter("countries_25112021", filter);
 
 
         var filter_points = ["in", 'adm0_code', country_id];
@@ -1647,6 +1705,7 @@ setTimeout(function(){
   c_amphibians ();
   c_th_amphibians ();
   c_birds ();
+  c_th_birds();
 
   c_carbon_pa ();
   c_forest_pa ();
@@ -1657,6 +1716,7 @@ setTimeout(function(){
   c_amphibians_pa ();
   c_th_amphibians_pa ();
   c_birds_pa ();
+  c_th_birds_pa();
 
   $('input.checkbox_check').prop('checked', false);
   }); // map onclick function
@@ -1804,6 +1864,18 @@ $('.delvarico-carbon').click(function() {
     $('.delvarico-birds').html("add");
     $('.range-field-birds').css('opacity', '0');
     }});
+    $('.delvarico-th_birds').click(function() {
+      var resetval = $("#birds_th_value").html();
+      if(resetval== 0){
+      $("#birds_th_value").html(1);
+      $('#birds_th_slider').val(1);
+      $('.delvarico-th_birds').html("clear");
+      $('.range-field-th_birds').css('opacity', '1');
+      }else{
+      $("#birds_th_value").html(0);
+      $('.delvarico-th_birds').html("add");
+      $('.range-field-th_birds').css('opacity', '0');
+      }});
 
 // duccio
 $("#submit").click(function () { 
@@ -1853,6 +1925,7 @@ $("#submit").click(function () {
     max_th_mammals = (th_mammals_max());
     max_th_amphibians = (th_amphibians_max());
     max_birds = (birds_max());
+    max_th_birds = (th_birds_max());
 
     min_carbon = (carbon_min());
     min_water = (water_min());
@@ -1863,6 +1936,7 @@ $("#submit").click(function () {
     min_th_mammals = (th_mammals_min());
     min_th_amphibians = (th_amphibians_min());
     min_birds = (birds_min());
+    min_th_birds = (th_birds_min());
 
     mean_carbon = (carbon_mean());
     mean_water = (water_mean());
@@ -1873,6 +1947,7 @@ $("#submit").click(function () {
     mean_th_mammals = (th_mammals_mean());
     mean_th_amphibians = (th_amphibians_mean());
     mean_birds = (birds_mean());
+    mean_th_birds = (th_birds_mean());
 
     var score_carbon = $("#carbon_value").val();
     var score_water = $("#water_value").val();
@@ -1883,10 +1958,11 @@ $("#submit").click(function () {
     var score_amphibians = $("#amphibians_value").val();
     var score_th_ambhibians = $("#amphibians_th_value").val();
     var score_birds = $("#birds_value").val();
+    var score_th_birds = $("#birds_th_value").val();
 
-    var min_val = (min_carbon*score_carbon)+(min_water*score_water)+(min_natural*score_natural)+(min_forest*score_forest)+(min_mammals*score_mammals)+(min_amphibians*score_amphibians)+(min_th_mammals*score_th_mammals)+(min_th_amphibians*score_th_ambhibians)+(min_birds*score_birds)
-    var max_val = (max_carbon*score_carbon)+(max_water*score_water)+(max_natural*score_natural)+(max_forest*score_forest)+(max_mammals*score_mammals)+(max_amphibians*score_amphibians)+(max_th_mammals*score_th_mammals)+(max_th_amphibians*score_th_ambhibians)+(max_birds*score_birds)
-    var avg_val = (mean_carbon*score_carbon)+(mean_water*score_water)+(mean_natural*score_natural)+(mean_forest*score_forest)+(mean_mammals*score_mammals)+(mean_amphibians*score_amphibians)+(mean_th_mammals*score_th_mammals)+(mean_th_amphibians*score_th_ambhibians)+(mean_birds*score_birds)
+    var min_val = (min_carbon*score_carbon)+(min_water*score_water)+(min_natural*score_natural)+(min_forest*score_forest)+(min_mammals*score_mammals)+(min_amphibians*score_amphibians)+(min_th_mammals*score_th_mammals)+(min_th_amphibians*score_th_ambhibians)+(min_birds*score_birds)+(min_th_birds*score_th_birds)
+    var max_val = (max_carbon*score_carbon)+(max_water*score_water)+(max_natural*score_natural)+(max_forest*score_forest)+(max_mammals*score_mammals)+(max_amphibians*score_amphibians)+(max_th_mammals*score_th_mammals)+(max_th_amphibians*score_th_ambhibians)+(max_birds*score_birds)+(max_th_birds*score_th_birds)
+    var avg_val = (mean_carbon*score_carbon)+(mean_water*score_water)+(mean_natural*score_natural)+(mean_forest*score_forest)+(mean_mammals*score_mammals)+(mean_amphibians*score_amphibians)+(mean_th_mammals*score_th_mammals)+(mean_th_amphibians*score_th_ambhibians)+(mean_birds*score_birds)+(mean_th_birds*score_th_birds)
 
 
 
@@ -1942,7 +2018,8 @@ $("#submit").click(function () {
       [ "*", ['get', 'mammals_th'],  parseInt(score_th_mammals)],
       [ "*", ['get', 'amphibians'],  parseInt(score_amphibians)],
       [ "*", ['get', 'amphi_th'],  parseInt(score_th_ambhibians)],
-      [ "*", ['get', 'birds'],  parseInt(score_birds)]
+      [ "*", ['get', 'birds'],  parseInt(score_birds)],
+      [ "*", ['get', 'birds_th'],  parseInt(score_th_birds)]
       ],
 
       min_val,"#e47923",avg_val, "#45392d", max_val,"#c1f6a4"]);
@@ -2144,6 +2221,21 @@ map.on('draw.create', function(e){
     for(var i = 0, len = birds.length; i < len; i++) {
       BirdsTotal += birds[i]/len;
     }
+
+       // calculate th birds ------------------------------------------------------------------------------------------
+   var th_birds = features.reduce(function(print_th_birds, feature) {
+    var inside=turf.pointsWithinPolygon(feature, userPolygon)
+      if (! (undefined === inside)) {
+        if (inside.features.length>0){
+          print_th_birds.push(feature.properties.birds_th);
+        }
+      }
+        return print_th_birds;
+  }, []);
+  var ThBirdsTotal = 0;
+  for(var i = 0, len = th_birds.length; i < len; i++) {
+    ThBirdsTotal += th_birds[i]/len;
+  }
        // calculate amphibians ------------------------------------------------------------------------------------------
    var amphibians = features.reduce(function(print_amphibians, feature) {
       var inside=turf.pointsWithinPolygon(feature, userPolygon)
@@ -2183,7 +2275,7 @@ var score_th_mammals = $("#mammals_th_value").val();
 var score_amphibians = $("#amphibians_value").val();
 var score_th_ambhibians = $("#amphibians_th_value").val();
 var score_birds = $("#birds_value").val();
-
+var score_th_birds = $("#birds_th_value").val();
 
 // average biodiversity score is (sum of all variables * score)/number of variables
 // $('#polygon_out_main').append('<div id="draw_title" class = "section_out_title"><p>Weighted scores for the area selected ('+(Math.round(DrewAreaArray[0]*100)/100).toLocaleString()+' km<sup>2</sup>)</p> </div><br>'
@@ -2243,6 +2335,7 @@ $( ".calculation-box" ).show();
             'Amphibians',
             'Threatened Amphibians',
             'Birds',
+            'Threatened Birds'
         ],
         crosshair: true
     },
@@ -2273,7 +2366,7 @@ $( ".calculation-box" ).show();
         color: '#78b022',
         data: [parseFloat((CarbonTotal)), parseFloat((WaterTotal)) , parseFloat((NaturalTotal)), 
         parseFloat((ForestTotal)), parseFloat((MammalsTotal)), parseFloat((ThMammalsTotal)), 
-        parseFloat((AmphibiansTotal)), parseFloat((ThAmphibiansTotal)), parseFloat((BirdsTotal))]
+        parseFloat((AmphibiansTotal)), parseFloat((ThAmphibiansTotal)), parseFloat((BirdsTotal)), parseFloat((ThBirdsTotal))]
 
     },
     {
@@ -2281,7 +2374,7 @@ $( ".calculation-box" ).show();
         color: '#aebaba',
         data: [parseFloat(score_carbon)*CarbonTotal,parseFloat(score_water)*WaterTotal,parseFloat(score_natural)*NaturalTotal,
         parseFloat(score_forest)*ForestTotal,parseFloat(score_mammals)*MammalsTotal,parseFloat(score_th_mammals)*ThMammalsTotal,
-        parseFloat(score_amphibians)*AmphibiansTotal,parseFloat(score_th_ambhibians)*ThAmphibiansTotal,parseFloat(score_birds)*BirdsTotal]
+        parseFloat(score_amphibians)*AmphibiansTotal,parseFloat(score_th_ambhibians)*ThAmphibiansTotal,parseFloat(score_birds)*BirdsTotal,parseFloat(score_th_birds)*ThBirdsTotal]
 
     }]
 
@@ -2315,7 +2408,7 @@ Highcharts.chart('polygon_out_main_2', {
 
     xAxis: {
         categories: ['Carbon', 'Natural Areas', 'Water Presence', 'Intact Forest',
-            'Mammals Richness', 'Amphibians Richness', 'Birds Richness','Threatened Mammals Richness', 'Threatened Amphibians Richness'],
+            'Mammals Richness', 'Amphibians Richness', 'Birds Richness','Threatened Mammals Richness', 'Threatened Amphibians Richness', 'Threatened Birds Richness'],
         tickmarkPlacement: 'on',
         lineWidth: 0
 
@@ -2362,7 +2455,7 @@ Highcharts.chart('polygon_out_main_2', {
     },
         name: 'Country',
         color: '#e47923',
-        data: [country_carbon, country_natural, country_water, country_forest, country_mammals, country_amphibians, country_birds, country_th_mammals,country_th_amphibians],
+        data: [country_carbon, country_natural, country_water, country_forest, country_mammals, country_amphibians, country_birds, country_th_birds, country_th_mammals,country_th_amphibians],
         pointPlacement: 'on',
         lineWidth : 1,
         type:'line',
@@ -2373,7 +2466,7 @@ Highcharts.chart('polygon_out_main_2', {
     },
         name: 'Protected areas',
         color: '#648a31',
-        data: [country_carbon_pa, country_natural_pa, country_water_pa, country_forest_pa, country_mammals_pa, country_amphibians_pa, country_birds_pa, country_th_mammals_pa,country_th_amphibians_pa],
+        data: [country_carbon_pa, country_natural_pa, country_water_pa, country_forest_pa, country_mammals_pa, country_amphibians_pa, country_birds_pa, country_th_birds_pa, country_th_mammals_pa,country_th_amphibians_pa],
         pointPlacement: 'on',
         lineWidth : 1,
         type:'line',

@@ -1032,10 +1032,10 @@ input[type=range]::-webkit-slider-runnable-track {
       position: absolute;
       right: 0;
   }
-  body > div.sidebar > ul > li > div.collapsible-body > span > div > div > div > form:nth-child(10) > p > label > span{
+  body > div.sidebar > ul > li > div.collapsible-body > span > div > div > div > form:nth-child(11) > p > label > span{
     font-size: 11px;
   }
-  body > div.sidebar > ul > li > div.collapsible-body > span > div > div > div > form:nth-child(10){
+  body > div.sidebar > ul > li > div.collapsible-body > span > div > div > div > form:nth-child(11){
     margin-left: 16px;
       margin-top: 13px;
   }
