@@ -1564,12 +1564,12 @@ setTimeout(function(){
       
 
       $('#country_name').empty().append("<div id='country_name_'> <p> "+feature.properties.adm0_name+"</p></div> "+
-      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Biodiversity Resources Index in "+feature.properties.adm0_name+"</p> </div><div id='country_popx2' class = 'section_out_number'> <p> "+all_country_avg_val.toFixed(2)+"</p> </div></div>"+
-      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Biodiversity Resources Index inside Protected Areas</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+pa_country_avg_val.toFixed(2)+"</p> </div></div>"+
+      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Conservation Resources Score <b>outside</b> Protected Areas</p> </div><div id='country_popx2' class = 'section_out_number'> <p> "+all_country_avg_val.toFixed(2)+"</p> </div></div>"+
+      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Conservation Resources Score <b>inside</b> Protected Areas</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+pa_country_avg_val.toFixed(2)+"</p> </div></div>"+
       " <ul class= 'collapsible country_scores_main '><li class='active'><div id = 'country_scores_main_b' class='collapsible-header country_scores_main_b'><i class='material-icons '>grain</i>Biodiversity resources</div>"+
         "<div class='collapsible-body'>"+
-        "<div id='varlegend'><span class='square_var' style='background-color: #33452c'></span>Average value in Country</div>"+
-        "<div id='varlegend'><span class='square_var' style='background-color: #528636'></span>Average value in Country's Protecetd Areas</div>"+
+        "<div id='varlegend'><span class='square_var' style='background-color: #33452c'></span>Average value <b>outside</b> Protected Areas</div>"+
+        "<div id='varlegend'><span class='square_var' style='background-color: #528636'></span>Average value <b>inside</b> Protected Areas</div>"+
         "<hr>"+
           "<span class = 'coll_item_title' >Above and below ground carbon </span>"+
           "<div id='progressbar'><div style='width:"+carbon_f_w+"%'></div><em class = 'value_bar_c'>"+carbon_f.toFixed(2)+"</em> <em class = 'value_bar_p'> "+carbon_f_p.toFixed(2)+"</em></div>"+
@@ -1733,7 +1733,7 @@ setTimeout(function(){
       map.setFilter('grid_points_3', filter_points_2);
       setTimeout(function(){
       $("#submit").click();
-      $('.country_sel_legend_title').html('Biodiversity Resources Index in Country <br><b>Outside Protected Areas');
+      $('.country_sel_legend_title').html('Conservation Resources Score in Country <br><b>Outside Protected Areas');
     },1000);
 
     }else{
@@ -1744,7 +1744,7 @@ setTimeout(function(){
       map.setFilter('pa_buf', ["in", 'adm0_code', 0]);
       setTimeout(function(){
       $("#submit").click();
-      $('.country_sel_legend_title').html('Biodiversity Resources Index in Country');
+      $('.country_sel_legend_title').html('Conservation Resources Score in Country');
     },1000);
 
     }
@@ -1969,10 +1969,9 @@ $("#submit").click(function () {
   
         if ($('input.checkbox_check').is(':checked')) {
           setTimeout(function(){
-            $('.country_sel_legend_title').html('Biodiversity Resources Index in Country <br><b>excluding Protected Areas');
+            $('.country_sel_legend_title').html('Conservation Resources Score in Country <br><b>excluding Protected Areas');
 
             $('.legend').append("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
-            "<div><span class='circle_pa'style='background-color: #595958'></span>Partially protected</div>"+
             "<div><span class='square_pa'style='background-color: #595958'></span>Protected Areas Boundaries</div>"+
             "</div>").children(':last').hide().fadeIn(2000);
           
@@ -1980,7 +1979,7 @@ $("#submit").click(function () {
         
         }else{setTimeout(function(){
           $('#country_prot_legend').empty();
-          $('.country_sel_legend_title').html('Biodiversity Resources Index in Country');
+          $('.country_sel_legend_title').html('Conservation Resources Score in Country');
         },200);
       }
 
@@ -2000,7 +1999,7 @@ $("#submit").click(function () {
       if (parseFloat(max_val) == 0){
         map.setPaintProperty('grid_points_3', 'circle-color', '#ffffff');
         
-        $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Biodiversity Resources Index in Country</p>"+
+        $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Resources Score in Country</p>"+
           "<div><span style='background-color: #FFFFFF'></span>"+min_val.toFixed(2)+"</div>"+
           "<div><span style='background-color: #FFFFFF'></span>"+avg_val.toFixed(2)+"</div>"+
           "<div><span style='background-color: #FFFFFF'></span>"+(max_val).toFixed(2)+"</div>"+
@@ -2024,7 +2023,7 @@ $("#submit").click(function () {
 
       min_val,"#e47923",avg_val, "#45392d", max_val,"#c1f6a4"]);
 
-      $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Biodiversity Resources Index in Country</p>"+
+      $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Resources Score in Country</p>"+
         "<div><span style='background-color: #e47923'></span>"+min_val.toFixed(2)+"</div>"+
         "<div><span style='background-color: #45392d'></span>"+avg_val.toFixed(2)+"</div>"+
         "<div><span style='background-color: #a9e687'></span>"+(max_val).toFixed(2)+"</div>"+
