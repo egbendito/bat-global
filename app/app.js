@@ -1522,6 +1522,11 @@ setTimeout(function(){
  
       var all_country_avg_val = parseFloat(carbon_f+water_f+natural_f+forest_f+mammals_f+th_mammals_f+amphibians_f+th_amphibians_f+birds_f+th_birds_f)
 
+      var all_country_val = feature.properties.all_avg_tot;
+      console.log(feature.properties)
+ 
+      var up_all_country_avg_val = parseFloat(all_country_val)
+
       var carbon_f_p = feature.properties.carbon_a_p;
       var water_f_p = feature.properties.water_a_p;
       var natural_f_p = feature.properties.nat_a_p;
@@ -1563,9 +1568,11 @@ setTimeout(function(){
 
       
 
-      $('#country_name').empty().append("<div id='country_name_'> <p> "+feature.properties.adm0_name+"</p></div> "+
-      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Conservation Resources Score <b>outside</b> Protected Areas</p> </div><div id='country_popx2' class = 'section_out_number'> <p> "+all_country_avg_val.toFixed(2)+"</p> </div></div>"+
-      "<div id = 'country_pop_main' class = 'card_custom'><div id='country_pop_title' class = 'section_out_title'> <p>Average Conservation Resources Score <b>inside</b> Protected Areas</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+pa_country_avg_val.toFixed(2)+"</p> </div></div>"+
+      $('#country_name').empty().append("<div id='country_name_'><p>Average Conservation Score for "+feature.properties.adm0_name+"</p></div> "+
+      "<div id = 'country_pop_main' class = 'card_custom country_pop_main_a'><div id='country_pop_title' class = 'section_out_title'> <p>Country overall</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+up_all_country_avg_val.toFixed(2)+"</p> </div></div>"+
+      "<div id = 'country_pop_main' class = 'card_custom country_pop_main_b'><div id='country_pop_title' class = 'section_out_title'> <p>Outside Protected Areas</p> </div><div id='country_popx2' class = 'section_out_number'> <p> "+all_country_avg_val.toFixed(2)+"</p> </div></div>"+
+      "<div id = 'country_pop_main' class = 'card_custom country_pop_main_c'><div id='country_pop_title' class = 'section_out_title'> <p>Inside Protected Areas</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+pa_country_avg_val.toFixed(2)+"</p> </div></div>"+
+
       " <ul class= 'collapsible country_scores_main '><li class='active'><div id = 'country_scores_main_b' class='collapsible-header country_scores_main_b'><i class='material-icons '>grain</i>Biodiversity resources</div>"+
         "<div class='collapsible-body'>"+
         "<div id='varlegend'><span class='square_var' style='background-color: #33452c'></span>Average value <b>outside</b> Protected Areas</div>"+
