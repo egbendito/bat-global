@@ -762,7 +762,7 @@ var miolayer = map.getLayer('point');
     var birds_w = birds*100; 
     var birds_th_w = birds_th*100;
     popup.setLngLat(e.lngLat).setHTML(
-          " <ul><li><div id = 'country_scores_main_b'>Biodiversity Resources for <b>"+country_name+"</b></div>"+
+          " <ul><li><div id = 'country_scores_main_b'>Average Conservation Score outside PAs for <b>"+country_name+"</b></div>"+
                 "<div><span class = 'coll_item_title' > Carbon ("+carbon.toLocaleString()+")</span>"+
                   "<div id='progressbar'><div style='width:"+carbon_w+"%'></div></div>"+
                   "<span class = 'coll_item_title' > Water presence ("+water.toLocaleString()+")</span>"+
@@ -783,6 +783,7 @@ var miolayer = map.getLayer('point');
                   "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+         
                   "<span class = 'coll_item_title' > Threatened Birds Richness ("+birds_th.toLocaleString()+")</span>"+
                   "<div id='progressbar'><div style='width:"+birds_th_w+"%'></div></div>"+        
+                  "<hr><div class = 'total_score' > <b>"+((birds_th+birds+amphi_th+amphibians+mammals_th+mammals+forest+natural+water+carbon).toLocaleString())+"</div>"+ 
                   "</div></li></ul>"
 
         ).addTo(map);
@@ -876,7 +877,7 @@ coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 // based on the feature found.
 popup.setLngLat(coordinates).setHTML(
   
-  " <ul><li><div id = 'country_scores_main_b'>Biodiversity Resources </div>"+
+  " <ul><li><div id = 'country_scores_main_b'>Conservation Score</div>"+
         "<div><span class = 'coll_item_title' > Carbon ("+carbon.toLocaleString()+")</span>"+
           "<div id='progressbar'><div style='width:"+carbon_w+"%'></div></div>"+
           "<span class = 'coll_item_title' > Water presence ("+water.toLocaleString()+")</span>"+
@@ -896,7 +897,8 @@ popup.setLngLat(coordinates).setHTML(
           "<span class = 'coll_item_title' > Birds Richness ("+birds.toLocaleString()+")</span>"+
           "<div id='progressbar'><div style='width:"+birds_w+"%'></div></div>"+        
           "<span class = 'coll_item_title' > Threatened Birds Richness ("+birds_th.toLocaleString()+")</span>"+
-          "<div id='progressbar'><div style='width:"+birds_th_w+"%'></div></div>"+    
+          "<div id='progressbar'><div style='width:"+birds_th_w+"%'></div></div>"+   
+          //"<hr><div class = 'total_score' > <b>"+((birds_th+birds+amphi_th+amphibians+mammals_th+mammals+forest+natural+water+carbon).toLocaleString())+"</div>"+ 
          
           "</div></li></ul>"
 
@@ -1740,7 +1742,7 @@ setTimeout(function(){
       map.setFilter('grid_points_3', filter_points_2);
       setTimeout(function(){
       $("#submit").click();
-      $('.country_sel_legend_title').html('Conservation Resources Score in Country <br><b>Outside Protected Areas');
+      $('.country_sel_legend_title').html('Conservation Score in Country <br><b>Outside Protected Areas');
     },1000);
 
     }else{
@@ -1751,7 +1753,7 @@ setTimeout(function(){
       map.setFilter('pa_buf', ["in", 'adm0_code', 0]);
       setTimeout(function(){
       $("#submit").click();
-      $('.country_sel_legend_title').html('Conservation Resources Score in Country');
+      $('.country_sel_legend_title').html('Conservation Score in Country');
     },1000);
 
     }
@@ -1976,7 +1978,7 @@ $("#submit").click(function () {
   
         if ($('input.checkbox_check').is(':checked')) {
           setTimeout(function(){
-            $('.country_sel_legend_title').html('Conservation Resources Score in Country <br><b>excluding Protected Areas');
+            $('.country_sel_legend_title').html('Conservation Score in Country <br><b>excluding Protected Areas');
 
             $('.legend').append("<br><div id='country_prot_legend'> <p class='country_sel_legend_title'>Protected Areas</p>"+
             "<div><span class='square_pa'style='background-color: #595958'></span>Protected Areas Boundaries</div>"+
@@ -1986,7 +1988,7 @@ $("#submit").click(function () {
         
         }else{setTimeout(function(){
           $('#country_prot_legend').empty();
-          $('.country_sel_legend_title').html('Conservation Resources Score in Country');
+          $('.country_sel_legend_title').html('Conservation Score in Country');
         },200);
       }
 
@@ -2006,7 +2008,7 @@ $("#submit").click(function () {
       if (parseFloat(max_val) == 0){
         map.setPaintProperty('grid_points_3', 'circle-color', '#ffffff');
         
-        $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Resources Score in Country</p>"+
+        $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Score in Country</p>"+
           "<div><span style='background-color: #FFFFFF'></span>"+min_val.toFixed(2)+"</div>"+
           "<div><span style='background-color: #FFFFFF'></span>"+avg_val.toFixed(2)+"</div>"+
           "<div><span style='background-color: #FFFFFF'></span>"+(max_val).toFixed(2)+"</div>"+
@@ -2033,11 +2035,12 @@ $("#submit").click(function () {
       var avg_leg_pos = (100*avg_val)/max_val
       var avg_leg_pos_gr = ((100*avg_val)/max_val)-10
 
-      $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Resources Score in Country</p>"+
+      $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Score in Country</p>"+
         "<div style='color: #dadada; font-size: 12px; float: left!important;'>"+min_val.toFixed(2)+"</div>"+
         "<div style='color: #dadada; font-size: 12px; float: left!important; margin-bottom: -30px; margin-left: "+avg_leg_pos_gr+"%;!important;'>"+avg_val.toFixed(2)+"</div>"+
         "<div style='color: #dadada; font-size: 12px; float: right!important;'>"+max_val.toFixed(2)+"</div>"+
         "<div class='LegendGradient' style='background-image: -webkit-linear-gradient(left,#e47923 -42%,#45392d "+(avg_leg_pos)+"%,#a9e687 139%)!important; clear: both;'></div>"+
+       // "<hr><div class='legenddistrib' style='color: #dadada; font-size: 12px; text-align: center!important;'>"+Math.abs(avg_leg_pos-100).toFixed(1)+"% of locations holds above average values.</div>"+
         "</div>");
 
       }

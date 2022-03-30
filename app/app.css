@@ -3,7 +3,12 @@
         height: 10px;
 
     }
-
+.total_score{
+  text-align: center;
+  background: #191a1a;
+  color: #53b61d;
+  font-size: 2.5em;
+}
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     cursor: pointer;
@@ -988,13 +993,50 @@ input[type=range]::-webkit-slider-runnable-track {
     border-bottom: 0px solid #839596;
     margin-top: -1px;
   }
+  #country_scores_main_b{
+   
+    color: white;
+    margin-bottom: 10px;
+}
+  .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    -webkit-align-self: center;
+    align-self: center;
+    border-bottom: none;
+    border-top-color: #191a1a!important;
+}
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  -webkit-align-self: center;
+  align-self: center;
+  border-bottom: none;
+  border-top-color: #191a1a!important;
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  -webkit-align-self: center;
+  align-self: center;
+  border-bottom: none;
+  border-top-color: #191a1a!important;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  -webkit-align-self: center;
+  align-self: center;
+  border-bottom: none;
+  border-top-color: #191a1a!important;
+}
+  .mapboxgl-popup-content {
+    position: relative;
+    background: #191a1a!important;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+    padding: 10px 10px 15px;
+    pointer-events: auto;
+}
   #progressbar {
-    background-color: #6f81521f;
+    background-color: #fefefe0a;
     border-radius: 3px;
     padding: 0px;
   }
   #progressbar>div {
-    background-color: #52863642;
+    background-color: #528636;
     height: 12px;
     border-radius: 0px;
     margin-bottom: 3px;
@@ -1012,7 +1054,8 @@ input[type=range]::-webkit-slider-runnable-track {
   }
   .coll_item_title{
     font-family: 'Montserrat', sans-serif!important;
-      font-size: 10px;
+    font-size: 10px;
+    color: white;
   
   }
   
