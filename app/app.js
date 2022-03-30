@@ -2028,18 +2028,21 @@ $("#submit").click(function () {
       [ "*", ['get', 'birds_th'],  parseInt(score_th_birds)]
       ],
 
-      min_val,"#e47923",avg_val, "#45392d", max_val,"#c1f6a4"]);
+      min_val,"#e47923",avg_val, "#45392d", max_val,"#a9e687"]);
+
+      var avg_leg_pos = (100*avg_val)/max_val
+      var avg_leg_pos_gr = ((100*avg_val)/max_val)-10
 
       $('.legend').empty().append("<div id='country_sel_legend'> <p class='country_sel_legend_title'>Conservation Resources Score in Country</p>"+
-        "<div><span style='background-color: #e47923'></span>"+min_val.toFixed(2)+"</div>"+
-        "<div><span style='background-color: #45392d'></span>"+avg_val.toFixed(2)+"</div>"+
-        "<div><span style='background-color: #a9e687'></span>"+(max_val).toFixed(2)+"</div>"+
+        "<div style='color: #dadada; font-size: 12px; float: left!important;'>"+min_val.toFixed(2)+"</div>"+
+        "<div style='color: #dadada; font-size: 12px; float: left!important; margin-bottom: -30px; margin-left: "+avg_leg_pos_gr+"%;!important;'>"+avg_val.toFixed(2)+"</div>"+
+        "<div style='color: #dadada; font-size: 12px; float: right!important;'>"+max_val.toFixed(2)+"</div>"+
+        "<div class='LegendGradient' style='background-image: -webkit-linear-gradient(left,#e47923 -42%,#45392d "+(avg_leg_pos)+"%,#a9e687 139%)!important; clear: both;'></div>"+
         "</div>");
 
       }
    
       },1000);
-
 
 
 
