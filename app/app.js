@@ -1575,10 +1575,10 @@ setTimeout(function(){
       "<div id = 'country_pop_main' class = 'card_custom country_pop_main_b'><div id='country_pop_title' class = 'section_out_title'> <p>Outside Protected Areas</p> </div><div id='country_popx2' class = 'section_out_number'> <p> "+all_country_avg_val.toFixed(2)+"</p> </div></div>"+
       "<div id = 'country_pop_main' class = 'card_custom country_pop_main_c'><div id='country_pop_title' class = 'section_out_title'> <p>Inside Protected Areas</p> </div><div id='country_popx' class = 'section_out_number'> <p> "+pa_country_avg_val.toFixed(2)+"</p> </div></div>"+
 
-      " <ul class= 'collapsible country_scores_main '><li class='active'><div id = 'country_scores_main_b' class='collapsible-header country_scores_main_b'><i class='material-icons '>grain</i>Biodiversity resources</div>"+
+      " <ul class= 'collapsible country_scores_main '><li class='active'><div id = 'country_scores_main_b' class='collapsible-header country_scores_main_b'><i class='material-icons '>grain</i>Conservation resources</div>"+
         "<div class='collapsible-body'>"+
-        "<div id='varlegend'><span class='square_var' style='background-color: #33452c'></span>Average value <b>outside</b> Protected Areas</div>"+
-        "<div id='varlegend'><span class='square_var' style='background-color: #528636'></span>Average value <b>inside</b> Protected Areas</div>"+
+        "<div id='varlegend'><span class='square_var' style='background-color: #8ea67d'></span>Average value <b>outside</b> Protected Areas</div>"+
+        "<div id='varlegend'><span class='square_var' style='background-color: #576e38'></span>Average value <b>inside</b> Protected Areas</div>"+
         "<hr>"+
           "<span class = 'coll_item_title' >Above and below ground carbon </span>"+
           "<div id='progressbar'><div style='width:"+carbon_f_w+"%'></div><em class = 'value_bar_c'>"+carbon_f.toFixed(2)+"</em> <em class = 'value_bar_p'> "+carbon_f_p.toFixed(2)+"</em></div>"+
