@@ -2683,7 +2683,7 @@ Highcharts.chart('polygon_out_main_2', {
 
     xAxis: {
         categories: ['Carbon', 'Natural Areas', 'Water Presence', 'Intact Forest',
-            'Mammals Richness', 'Amphibians Richness', 'Birds Richness','Threatened Mammals Richness', 'Threatened Amphibians Richness', 'Threatened Birds Richness'],
+            'Mammals Richness', 'Threatened Mammals Richness', 'Amphibians Richness', 'Threatened Amphibians Richness', 'Birds Richness', 'Threatened Birds Richness'],
         tickmarkPlacement: 'on',
         lineWidth: 0
 
@@ -2720,8 +2720,9 @@ Highcharts.chart('polygon_out_main_2', {
         name: 'Area selected',
         color: '#47585a',
         data: [parseFloat((CarbonTotal)), parseFloat((NaturalTotal)), parseFloat((WaterTotal)),
-        parseFloat((ForestTotal)), parseFloat((MammalsTotal)), parseFloat((AmphibiansTotal)), parseFloat((BirdsTotal)), 
-         parseFloat((ThMammalsTotal)), parseFloat((ThAmphibiansTotal))],
+        parseFloat((ForestTotal)), parseFloat((MammalsTotal)), parseFloat((ThMammalsTotal)), parseFloat((AmphibiansTotal)),
+        parseFloat((ThAmphibiansTotal)),parseFloat((BirdsTotal)), parseFloat((ThBirdsTotal))
+        ],
         pointPlacement: 'on',
         lineWidth : 1,
     }, {
@@ -2730,7 +2731,7 @@ Highcharts.chart('polygon_out_main_2', {
     },
         name: 'Country',
         color: '#e47923',
-        data: [country_carbon, country_natural, country_water, country_forest, country_mammals, country_amphibians, country_birds, country_th_birds, country_th_mammals,country_th_amphibians],
+        data: [country_carbon, country_natural, country_water, country_forest, country_mammals, country_th_mammals, country_amphibians, country_th_amphibians, country_birds, country_th_birds,],
         pointPlacement: 'on',
         lineWidth : 1,
         type:'line',
@@ -2741,7 +2742,7 @@ Highcharts.chart('polygon_out_main_2', {
     },
         name: 'Protected areas',
         color: '#648a31',
-        data: [country_carbon_pa, country_natural_pa, country_water_pa, country_forest_pa, country_mammals_pa, country_amphibians_pa, country_birds_pa, country_th_birds_pa, country_th_mammals_pa,country_th_amphibians_pa],
+        data: [country_carbon_pa, country_natural_pa, country_water_pa, country_forest_pa, country_mammals_pa, country_th_mammals_pa, country_amphibians_pa, country_th_amphibians_pa, country_birds_pa, country_th_birds_pa],
         pointPlacement: 'on',
         lineWidth : 1,
         type:'line',
