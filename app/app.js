@@ -347,7 +347,7 @@ var miolayer = map.getLayer('point');
           // make circles larger as the user zooms from z12 to z22
           'circle-radius': {
             'base': 4,
-            'stops': [[1, 3], [7.6, 13.8]]
+            'stops': [[1, 3], [8.9, 12]]
           }, 'circle-color': '#343333',
 
 
@@ -398,16 +398,56 @@ var miolayer = map.getLayer('point');
           // make circles larger as the user zooms from z12 to z22
           'circle-radius': {
             'base': 4,
-            'stops': [[1, 5], [10, 8]]
+            'stops': [[1, 2], [8.9, 21]]
           },
-        'circle-color': '#3bb2d0',
+        'circle-color': '#ebbc35',
 
          'circle-opacity': 0.4
       },"filter":["in", "adm0_code", ""]
 
     }, 'grid_points_3');
 
+    map.addLayer({
+      "id": "point_selecte_by_treshold",
+      "type": "circle",
+      "source": {
+          "type": "vector",
+          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+          },
+      "source-layer": "points_3857_25112021",
+      'paint': {
+        // make circles larger as the user zooms from z12 to z22
+        'circle-radius': {
+          'base': 4,
+          'stops': [[1, 5], [6, 14]]
+        },
+      'circle-color': '#5eaabd',
 
+       'circle-opacity': 0.4
+    },"filter":["in", "adm0_code", ""]
+
+  }, 'grid_points_3');
+
+  map.addLayer({
+    "id": "point_selecte_by_treshold_prot",
+    "type": "circle",
+    "source": {
+        "type": "vector",
+        "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+        },
+    "source-layer": "points_3857_25112021",
+    'paint': {
+      // make circles larger as the user zooms from z12 to z22
+      'circle-radius': {
+        'base': 4,
+        'stops': [[1, 5], [6, 14]]
+      },
+    'circle-color': '#123943',
+
+     'circle-opacity': 0.4
+  },"filter":["in", "adm0_code", ""]
+
+}, 'grid_points_3');
 
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
@@ -795,37 +835,22 @@ var miolayer = map.getLayer('point');
     popup.remove();
   });
 
-//   map.on('zoom', function() {
-//     $("#map").busyLoad("show", busy_tabs);
-//     var tilesLoaded = map.areTilesLoaded();
-//   if (tilesLoaded == true){
-//     setTimeout(function(){
-//       $("#map").busyLoad("hide", {animation: "fade"});
-//    console.log('3')
-//     }, 1000);
-//   }else{
-//     setTimeout(function(){
-//       $("#map").busyLoad("hide", {animation: "fade"});
-//       console.log('5')
-//     }, 3000);
-     
-//   }
-// });
-  
-  var tilesLoaded = map.areTilesLoaded();
-  if (tilesLoaded == true){
-    setTimeout(function(){
-      $("#map").busyLoad("hide", {animation: "fade"});
-   console.log('3')
-    }, 300);
 
- }else{
-    setTimeout(function(){
-      $("#map").busyLoad("hide", {animation: "fade"});
-      console.log('5')
-    }, 1000);
-     
-  }
+  
+var tilesLoaded = map.areTilesLoaded();
+if (tilesLoaded == true){
+  setTimeout(function(){
+    $("#map").busyLoad("hide", {animation: "fade"});
+    
+  }, 300);
+
+}else{
+  setTimeout(function(){
+    $("#map").busyLoad("hide", {animation: "fade"});
+    
+  }, 1000);
+   
+}
 
 
 // Create a popup, but don't add it to the map yet.
@@ -1205,6 +1230,11 @@ $("#country_name").click(function(){
  
   $(document).ready(function()
     {
+      $("#treshold_value").html(0);
+      $('#treshold_slider').val(0);
+      $('.delvarico-treshold').html("clear");
+      $('.range-field-treshold').css('opacity', '1');
+
       $("#carbon_value").html(1);
       $('#carbon_slider').val(1);
       $('.delvarico-carbon').html("clear");
@@ -1277,6 +1307,7 @@ setTimeout(function(){
   
 
   map.on('click', 'countries_25112021', function(e) {
+    
 
     window.history.replaceState(null, null, "?iso3="+e.features[0].properties.iso3);
     var pa_bb_url = "https://geospatial.jrc.ec.europa.eu/geoserver/wfs?request=getfeature&version=1.0.0&service=wfs&typename=dopa_explorer_3:global_dashboard&propertyname=iso3_digit&SORTBY=iso3_digit&CQL_FILTER=iso3_digit='"+e.features[0].properties.iso3+"'&outputFormat=application%2Fjson";
@@ -1308,11 +1339,40 @@ setTimeout(function(){
 
       map.setFilter('pa_buf', ["in", 'adm0_code', 0]);
 
-      $("#map").busyLoad("show", busy_tabs);
-      map.setPaintProperty(
-      'grid_points_3',
-      'circle-opacity',0,
-      'circle-color', '#ffffff');
+      const busy_tabsx = 
+      {
+        'Computing spatial statistics': 'a',
+        'Generating map tiles': 'a',
+        'Extracting values': 'a',
+        'Loading results': 'a',
+        'Analysing data': 'a',
+      };
+
+    function getRandomProperty(busy_tabsx) {
+      const keys = Object.keys (busy_tabsx);
+      return keys[Math.floor(Math.random() * keys.length)];
+    }
+    
+    var first = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', textPosition: "right",text: 'Computing spatial statistics...', fontSize: '1.5rem', color:'#d0d0d0',background:'#000407cf'}
+    var second = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', textPosition: "right",text: 'Extracting values...', fontSize: '1.5rem', color:'#d0d0d0',background:'#000407cf'}
+    var third = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', textPosition: "right",text: 'Generating map tiles...', fontSize: '1.5rem', color:'#d0d0d0',background:'#000407cf'}
+    var forth = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', textPosition: "right",text: 'Loading results...', fontSize: '1.5rem', color:'#d0d0d0',background:'#000407cf'}
+
+    var loading = true;
+    if (loading) {
+      setTimeout(() => {
+        $("#map").busyLoad("show", first);
+      }, 0);
+      setTimeout(() => {
+        $("#map").busyLoad("hide").busyLoad("show", second);
+      }, 1200);
+      setTimeout(() => {
+        $("#map").busyLoad("hide").busyLoad("show", third);
+      }, 2800);
+      setTimeout(() => {
+        $("#map").busyLoad("hide").busyLoad("show", forth);
+      }, 3800);
+    }
   
     setTimeout(function(){
     $('#country_name').click();
@@ -1390,6 +1450,12 @@ setTimeout(function(){
     $('#submit').css('background-color','#bd6116').css('color','#ffffff')
   });
 
+  
+
+
+  
+
+  
       if (e.features.length > 0) {
 
     // compute variable values for country 
@@ -1615,7 +1681,13 @@ setTimeout(function(){
       $('#custom_map_tools').empty().append("<div id = 'dddd'><div id ='btn_maps'>"+ 
         "<button type='button' class='btn btn-primary draw_rec_custom'><i class='far fa-square'></i></button>"+ 
         "<button type='button' class='btn btn-primary draw_custom'><i class='fas fa-draw-polygon'></i></button>"+ 
-        "<button type='button' class='btn btn-secondary clean_custom'><i class='fas fa-trash-alt'></i></button>");
+        "<button type='button' class='btn btn-secondary clean_custom'><i class='fas fa-trash-alt'></i></button>"+
+        "<form action='#'><div class='input-field col s12'>"+
+        "<br><hr  style=' border-color: #000000!important;'><br><p calss='rank-text' style='color:white;font-size:20px; line-height: 32px;'>Select top-ranking areas</p>"+
+        "<p class='range-field range-field-treshold'><input type='range' id='treshold_slider' value ='0' min='0' max='30' /> <output id='treshold_value' style='color:#adc0c700!important;'> name='treshold_value'>0<span> %</span></output></p>"+
+        "<div id='planningarea' style='color: #dadada;     margin-top: 20px; font-size: 14px;'></div>"+
+        "</div>"+
+      "</form>");
         
         $('#submit').text("Compute scores for "+country_name)
 
@@ -1679,7 +1751,7 @@ setTimeout(function(){
     });
 
 
-
+    
  
   // var tilesLoaded = map.areTilesLoaded();
   // if (tilesLoaded == true){
@@ -1760,8 +1832,19 @@ setTimeout(function(){
 });
 
 //-------------------------------------------submit
+$('.delvarico-treshold').click(function() {
+  var resetval = $("#treshold_value").html();
+  if(resetval== 0){
+  $("#treshold_value").html(0);
+  $('#treshold_slider').val(0);
+  $('.delvarico-treshold').html("clear");
+  $('.range-field-treshold').css('opacity', '1');
+  }else{
+  $("#treshold_value").html(0);
+  $('.delvarico-treshold').html("add");
+  $('.range-field-treshold').css('opacity', '0');
+  }});
 
-    
 $('.delvarico-carbon').click(function() {
     var resetval = $("#carbon_value").html();
     if(resetval== 0){
@@ -1889,6 +1972,33 @@ $('.delvarico-carbon').click(function() {
 // duccio
 $("#submit").click(function () { 
 
+  const busy_tabs = {
+    'Computing spatial statistics': 'a',
+    'Generating map tiles': 'a',
+    'Extracting values': 'a',
+    'Loading results': 'a',
+    'Analysing data': 'a',
+  };
+
+  function getRandomProperty(busy_tabs) {
+    const keys = Object.keys (busy_tabs);
+  
+    return keys[Math.floor(Math.random() * keys.length)];
+  }
+var gianni = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', text: getRandomProperty(busy_tabs), textPosition: "bottom", fontSize: '1rem', color:'#171d28',background:'#ffffffab'}
+
+
+  $("#map").busyLoad("show", gianni);
+
+
+  $("#treshold_value").html(0);
+  $('#treshold_slider').val(0);
+  $('.delvarico-treshold').html("clear");
+  $('.range-field-treshold').css('opacity', '1');
+  
+  map.setFilter('point_selecte_by_drow', ['==', 'fid', "" ]);
+  map.setFilter('point_selecte_by_treshold', ['==', 'fid', "" ]);
+  map.setFilter('point_selecte_by_treshold_prot', ['==', 'fid', "" ]);
   var queryString = window.location.search;
   var urlParams = new URLSearchParams(queryString);
   var country_iso3 = urlParams.get('iso3')
@@ -1903,6 +2013,7 @@ $("#submit").click(function () {
               var x4 = d.features[0].properties.bbox[3];
               map.fitBounds([[x3,x4],[x1,x2]])
               console.log([[x3,x4],[x1,x2]])  
+            
         },
     });
 
@@ -1974,7 +2085,7 @@ $("#submit").click(function () {
     var avg_val = (mean_carbon*score_carbon)+(mean_water*score_water)+(mean_natural*score_natural)+(mean_forest*score_forest)+(mean_mammals*score_mammals)+(mean_amphibians*score_amphibians)+(mean_th_mammals*score_th_mammals)+(mean_th_amphibians*score_th_ambhibians)+(mean_birds*score_birds)+(mean_th_birds*score_th_birds)
 
 
-
+  
   
         if ($('input.checkbox_check').is(':checked')) {
           setTimeout(function(){
@@ -1992,18 +2103,19 @@ $("#submit").click(function () {
         },200);
       }
 
-      if (!isFinite(max_val)){
-        $( ".legend" ).hide();
-        $("#map").busyLoad("hide", {animation: "fade"});
-        setTimeout(function(){
-          $("#country_name").click();
-          $("#map").busyLoad("show", busy_tabs);
-          console.log('endinf')
-      },10);
-      }else{
-        $("#map").busyLoad("hide", {animation: "fade"});
-        $( ".legend" ).show();
-      }
+    if (!isFinite(max_val)){
+      $( ".legend" ).hide();
+      $("#map").busyLoad("hide", {animation: "fade"});
+      
+      setTimeout(function(){
+        $("#country_name").click();
+        $("#map").busyLoad("show", getRandomProperty(gianni));
+    },10);
+    }else{
+      $("#map").busyLoad("hide", {animation: "fade"});
+      $("#mainpopup").show();
+      $( ".legend" ).show();
+    }
 
       if (parseFloat(max_val) == 0){
         map.setPaintProperty('grid_points_3', 'circle-color', '#ffffff');
@@ -2043,15 +2155,132 @@ $("#submit").click(function () {
        // "<hr><div class='legenddistrib' style='color: #dadada; font-size: 12px; text-align: center!important;'>"+Math.abs(avg_leg_pos-100).toFixed(1)+"% of locations holds above average values.</div>"+
         "</div>");
 
-      }
-   
+
+
+
+        
+
+        const features =  map.queryRenderedFeatures({layers: ['grid_points_3']});
+        var cid = features.map(f => f.properties.adm0_code);
+        var cname = features.map(f => f.properties.adm0_name);
+        var carbon = features.map(f => f.properties.carbon);
+        var water = features.map(f => f.properties.water);
+        var natural = features.map(f => f.properties.natural);
+        var forest = features.map(f => f.properties.forest);
+        var mammals = features.map(f => f.properties.mammals);
+        var amphibians = features.map(f => f.properties.amphibians);
+        var mammals_th = features.map(f => f.properties.mammals_th);
+        var amphi_th = features.map(f => f.properties.amphi_th);
+        var birds = features.map(f => f.properties.birds);
+        var birds_th = features.map(f => f.properties.birds_th);
+
+        var sum = carbon.map(function (num, idx) {
+          return num*parseInt(score_carbon) + water[idx]*parseInt(score_water)+ natural[idx]*parseInt(score_natural)+ forest[idx]*parseInt(score_forest)+ mammals[idx]*parseInt(score_mammals)+ mammals_th[idx]*parseInt(score_th_mammals)+ amphibians[idx]*parseInt(score_amphibians)+ amphi_th[idx]*parseInt(score_th_ambhibians)+ birds[idx]*parseInt(score_birds)+ birds_th[idx]*parseInt(score_th_birds);
+        });
+
+
+        const totalNum =  map.queryRenderedFeatures({layers: ['grid_points_3']}).length;
+
+        console.log(totalNum)
+ 
+        function getPercent(arr,perc) {
+          return arr.sort((a,b) => b-a).slice(0, parseInt(Math.ceil(arr.length * perc / 100)));
+        }
+      const arr = sum
+
+      $("#treshold_slider").on("input", function() {
+        var score_treshold = this.value;
+        $("#treshold_value").html(score_treshold);
+       
+     
+      var treshold = (Math.min(...getPercent(arr,score_treshold)));
+
+      var filter_points_2 = ['all'
+      ,
+      [">",
+      ["+", 
+      [ "*", ['get', 'carbon'],  parseInt(score_carbon)], 
+      [ "*", ['get', 'water'],  parseInt(score_water)],
+      [ "*", ['get', 'natural'],  parseInt(score_natural)],
+      [ "*", ['get', 'forest'],  parseInt(score_forest)],
+      [ "*", ['get', 'mammals'],  parseInt(score_mammals)],
+      [ "*", ['get', 'mammals_th'],  parseInt(score_th_mammals)],
+      [ "*", ['get', 'amphibians'],  parseInt(score_amphibians)],
+      [ "*", ['get', 'amphi_th'],  parseInt(score_th_ambhibians)],
+      [ "*", ['get', 'birds'],  parseInt(score_birds)],
+      [ "*", ['get', 'birds_th'],  parseInt(score_th_birds)]
+      ],parseFloat(treshold)
+      
+      ],["==", ["get", "adm0_code"], cid[0]]
+      // ,["==",["get", "protection"], 0]
+    
+    ];
+    var filter_points_prot = ['all'
+    ,
+    [">",
+    ["+", 
+    [ "*", ['get', 'carbon'],  parseInt(score_carbon)], 
+    [ "*", ['get', 'water'],  parseInt(score_water)],
+    [ "*", ['get', 'natural'],  parseInt(score_natural)],
+    [ "*", ['get', 'forest'],  parseInt(score_forest)],
+    [ "*", ['get', 'mammals'],  parseInt(score_mammals)],
+    [ "*", ['get', 'mammals_th'],  parseInt(score_th_mammals)],
+    [ "*", ['get', 'amphibians'],  parseInt(score_amphibians)],
+    [ "*", ['get', 'amphi_th'],  parseInt(score_th_ambhibians)],
+    [ "*", ['get', 'birds'],  parseInt(score_birds)],
+    [ "*", ['get', 'birds_th'],  parseInt(score_th_birds)]
+    ],parseFloat(treshold)
+    
+    ],["==", ["get", "adm0_code"], cid[0]]
+     ,["==",["get", "protection"], 1]
+  
+  ];
+
+
+        map.setFilter('point_selecte_by_treshold', filter_points_2);
+        map.setFilter('point_selecte_by_treshold_prot', filter_points_prot);
+
+        setTimeout(function(){
+        var planningarea = map.queryRenderedFeatures({layers: ['point_selecte_by_treshold']}).length*100
+        var planningarea_prot = map.queryRenderedFeatures({layers: ['point_selecte_by_treshold_prot']}).length*100
+        var perc_planningarea_prot = ((score_treshold*planningarea_prot)/planningarea).toFixed(2)
+        var missingperc = (score_treshold - perc_planningarea_prot).toFixed(2)
+
+          var resetval = $("#treshold_value").html();
+
+          if(resetval== 0){
+          $("#planningarea").hide();
+
+          }else{
+            
+            $("#planningarea").show();
+            $("#planningarea").html("<br><div id='planningarea' style='color: #b5b8b9; font-size: 24px; LINE-HEIGHT: 34PX; FONT-FAMILY: 'Montserrat';'>"+ 
+            "The area to be priositised according to your settings is equal to <span style='color: #5eaabd; font-weight:bold'> "+(score_treshold).toLocaleString()+"%</span> of the country's total area,"+
+            " however, <span style='color: #206a7d; font-weight:bold'>"+perc_planningarea_prot+"%</span> of the area selected results already covered by protected and conserved areas."+
+            "<br>According to the current conservation priority settings, <span style='color: #b76a29; font-weight:bold'>"+missingperc.toLocaleString()+"% </span> of "+cname[0]+"'s lands still need to be protected.</div><br>"
+            );
+
+          }
       },1000);
 
 
 
+      
+
+      });
 
 
 
+
+
+
+
+
+
+
+      }
+   
+      },1000);
 
 });
 
@@ -2277,7 +2506,7 @@ map.on('draw.create', function(e){
       ThAmphibiansTotal += th_amphibians[i]/len;
     }
 
-
+    var score_treshold = $("#treshold_value").val();
 var score_carbon = $("#carbon_value").val();
 var score_water = $("#water_value").val();
 var score_natural = $("#natural_value").val();
@@ -2289,27 +2518,59 @@ var score_th_ambhibians = $("#amphibians_th_value").val();
 var score_birds = $("#birds_value").val();
 var score_th_birds = $("#birds_th_value").val();
 
-// average biodiversity score is (sum of all variables * score)/number of variables
-// $('#polygon_out_main').append('<div id="draw_title" class = "section_out_title"><p>Weighted scores for the area selected ('+(Math.round(DrewAreaArray[0]*100)/100).toLocaleString()+' km<sup>2</sup>)</p> </div><br>'
-//   +'<div> '
-//     +'<p class = "score_lable" >Carbon <em class = "score_value_print" >'+parseInt((CarbonTotal).toLocaleString())*score_carbon+'</em></p>'
-//     +'<p class = "score_lable" >Water <em class = "score_value_print" >'+parseInt((WaterTotal).toLocaleString())*score_water+'</em></p>'
-//     +'<p class = "score_lable" >Natural Areas <em class = "score_value_print" >'+parseInt((NaturalTotal).toLocaleString())*score_natural+'</em></p>'
-//     +'<p class = "score_lable" >Intact Forest <em class = "score_value_print" >'+parseInt((ForestTotal).toLocaleString())*score_forest+'</em></p>'
-//     +'<p class = "score_lable" >Mammals <em class = "score_value_print" >'+parseInt((MammalsTotal).toLocaleString())*score_mammals+'</em></p>'
-//     +'<p class = "score_lable" >Endemic Threatened Mammals <em class = "score_value_print" >'+parseInt((ThMammalsTotal).toLocaleString())*score_th_mammals+'</em></p>'
-//     +'<p class = "score_lable" >Amphibians <em class = "score_value_print" >'+parseInt((AmphibiansTotal).toLocaleString())*score_amphibians+'</em></p>'
-//     +'<p class = "score_lable" >Endemic Threatened Amphibians <em class = "score_value_print" >'+parseInt((ThAmphibiansTotal).toLocaleString())*score_th_ambhibians+'</em></p>'
-//     +'<p class = "score_lable" >Birds <em class = "score_value_print" >'+parseInt((BirdsTotal).toLocaleString())*score_birds+'</em></p>'
-//   
-//     +'</div>')
 $( ".calculation-box" ).show();
 
+const ourData = [
+  {Variable:'Above and Below Ground Carbon',Weight:score_carbon,Score:CarbonTotal,Result:parseFloat(score_carbon)*CarbonTotal},
+  {Variable:'Water presence',Weight:score_water,Score:WaterTotal,Result:parseFloat(score_water)*WaterTotal},
+  {Variable:'Natural Areas',Weight:score_natural,Score:NaturalTotal,Result:parseFloat(score_natural)*NaturalTotal},
+  {Variable:'Intact Forest',Weight:score_forest,Score:ForestTotal,Result:parseFloat(score_forest)*ForestTotal},
+  {Variable:'Mammals Presence',Weight:score_mammals,Score:MammalsTotal,Result:parseFloat(score_mammals)*MammalsTotal},
+  {Variable:'Threatened Endemic Mammals Presence',Weight:score_th_mammals,Score:ThMammalsTotal,Result:parseFloat(score_th_mammals)*ThMammalsTotal},
+  {Variable:'Amphibians Presence',Weight:score_amphibians,Score:AmphibiansTotal,Result:parseFloat(score_amphibians)*AmphibiansTotal},
+  {Variable:'Threatened Endemic Amphibians Presence',Weight:score_th_ambhibians,Score:ThAmphibiansTotal,Result:parseFloat(score_th_ambhibians)*ThAmphibiansTotal},
+  {Variable:'Birds Presence',Weight:score_birds,Score:BirdsTotal,Result:parseFloat(score_birds)*BirdsTotal},
+  {Variable:'Threatened Endemic Birds Presence',Weight:score_th_birds,Score:ThBirdsTotal,Result:parseFloat(score_th_birds)*ThBirdsTotal},
+  
+]
 
-   
-  // $('.calculation-box_title').empty().append('<div id="draw_title" class = "section_out_title"><p>Biodiversity scores for this area </p> </div><br>')
-  // $('.calculation-box_title_2').empty().append('<div id="draw_title" class = "section_out_title"><p>What makes this area special?</p> </div><br>')
-  $('#polygon_out_main_area').empty().append('<p>'+(Math.round(DrewAreaArray[0]*100)/100).toLocaleString()+'</em> km<sup>2</sup></p>')
+
+
+
+const titleKeys = Object.keys(ourData[0])
+
+const refinedData = []
+
+refinedData.push(titleKeys)
+
+ourData.forEach(item => {
+  refinedData.push(Object.values(item))  
+})
+
+
+let csvContent = ''
+
+refinedData.forEach(row => {
+  csvContent += row.join(',') + '\n'
+})
+
+
+const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8,' })
+const objUrl = URL.createObjectURL(blob)
+const link = document.createElement('a')
+link.setAttribute('href', objUrl)
+link.setAttribute('download', 'Stats.csv')
+link.textContent = 'Download scenario for the selected area '
+$('.download_stats').empty()
+document.querySelector('.download_stats').append(link)
+
+$('#download_map').click(function() {
+  var img = map.getCanvas().toDataURL('image/png')
+  this.href = img
+})
+
+
+$('#polygon_out_main_area').empty().append('<p>'+(Math.round(DrewAreaArray[0]*100)/100).toLocaleString()+'</em> km<sup>2</sup></p>')
  
 
 

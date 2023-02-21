@@ -3,6 +3,12 @@
         height: 10px;
 
     }
+
+.rank-text{
+  color: #ffffff;
+  font-size: 12px;
+}
+
 .total_score{
   text-align: center;
   background: #191a1a;
@@ -667,6 +673,8 @@ input[type=range]::-webkit-slider-runnable-track {
       /* border-top: 2px solid #ffffffa8; */
       border: 0px solid #ffffff;
       margin-left: 17px;
+      width: 300px;
+
     }
     .map-overlay {
         position: absolute;
@@ -1201,4 +1209,21 @@ input[type=range]::-webkit-slider-runnable-track {
   #country_name > ul > li > div.collapsible-body > hr{
     height: 0px;
     border-color: #6b6b6b;
+  }
+
+
+  .download_stats{
+    background: #8ea273;
+    width: 94%;
+    margin-left: 3%;
+    color: white!important;
+    padding: 10px;
+  }
+  .download_map{
+    background: #7a8f5d;
+    width: 94%;
+    margin-left: 3%;
+    color:#404040!important;
+    padding: 10px;
+    border-top: 1px #404040;
   }
