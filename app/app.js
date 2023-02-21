@@ -333,103 +333,8 @@ var miolayer = map.getLayer('point');
 
   }, 'waterway-label');
 
-
-
- map.addLayer({
-        "id": "grid_points_3",
-        "type": "circle",
-        "source": {
-            "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
-            },
-        "source-layer": "points_3857_25112021",
-        'paint': {
-          // make circles larger as the user zooms from z12 to z22
-          'circle-radius': {
-            'base': 4,
-            'stops': [[1, 3], [8.9, 12]]
-          }, 'circle-color': '#343333',
-
-
-         'circle-opacity': 0.0
-      },//"filter":["in", "id_gaul", ""]
-
-      'filter': [
-  'all',
-  ["in", "adm0_code", ""],
-  ["==", "protected", 0]
-],
-
-    }, 'waterway-label');
-
-
-    map.addLayer({
-      "id": "pa_buf",
-      "type": "circle",
-      "source": {
-          "type": "vector",
-          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:buf_in_pa_points&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
-          },
-      "source-layer": "buf_in_pa_points",
-      'paint': {
-        // make circles larger as the user zooms from z12 to z22
-        'circle-radius': {
-        'base': 2,
-        'stops': [[1, 2], [7, 4]]
-        }, 'circle-color': '#595958',
-
-       'circle-opacity': 0.8
-    },//"filter":["in", "id_gaul", ""]
-
-    'filter': ["in", "adm0_code",0],
-
-  }, 'waterway-label');
-
-
-    map.addLayer({
-        "id": "point_selecte_by_drow",
-        "type": "circle",
-        "source": {
-            "type": "vector",
-            "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
-            },
-        "source-layer": "points_3857_25112021",
-        'paint': {
-          // make circles larger as the user zooms from z12 to z22
-          'circle-radius': {
-            'base': 4,
-            'stops': [[1, 2], [8.9, 21]]
-          },
-        'circle-color': '#ebbc35',
-
-         'circle-opacity': 0.4
-      },"filter":["in", "adm0_code", ""]
-
-    }, 'grid_points_3');
-
-    map.addLayer({
-      "id": "point_selecte_by_treshold",
-      "type": "circle",
-      "source": {
-          "type": "vector",
-          "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
-          },
-      "source-layer": "points_3857_25112021",
-      'paint': {
-        // make circles larger as the user zooms from z12 to z22
-        'circle-radius': {
-          'base': 4,
-          'stops': [[1, 5], [6, 14]]
-        },
-      'circle-color': '#5eaabd',
-
-       'circle-opacity': 0.4
-    },"filter":["in", "adm0_code", ""]
-
-  }, 'grid_points_3');
-
   map.addLayer({
-    "id": "point_selecte_by_treshold_prot",
+    "id": "grid_points_3",
     "type": "circle",
     "source": {
         "type": "vector",
@@ -440,14 +345,111 @@ var miolayer = map.getLayer('point');
       // make circles larger as the user zooms from z12 to z22
       'circle-radius': {
         'base': 4,
-        'stops': [[1, 5], [6, 14]]
+        'stops': [[1, 3], [8.9, 12]]
+      }, 'circle-color': '#343333',
+
+
+     'circle-opacity': 0.0
+  },//"filter":["in", "id_gaul", ""]
+
+  'filter': [
+'all',
+["in", "adm0_code", ""],
+["==", "protected", 0]
+],
+
+}, 'waterway-label');
+
+
+map.addLayer({
+  "id": "pa_buf",
+  "type": "circle",
+  "source": {
+      "type": "vector",
+      "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:buf_in_pa_points&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
       },
-    'circle-color': '#123943',
+  "source-layer": "buf_in_pa_points",
+  'paint': {
+    // make circles larger as the user zooms from z12 to z22
+    'circle-radius': {
+    'base': 2,
+    'stops': [[1, 2], [7, 4]]
+    }, 'circle-color': '#595958',
+
+   'circle-opacity': 0.8
+},//"filter":["in", "id_gaul", ""]
+
+'filter': ["in", "adm0_code",0],
+
+}, 'waterway-label');
+
+
+map.addLayer({
+    "id": "point_selecte_by_drow",
+    "type": "circle",
+    "source": {
+        "type": "vector",
+        "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+        },
+    "source-layer": "points_3857_25112021",
+    'paint': {
+      // make circles larger as the user zooms from z12 to z22
+      'circle-radius': {
+        'base': 4,
+        'stops': [[1, 2], [8.9, 21]]
+      },
+    'circle-color': '#ebbc35',
 
      'circle-opacity': 0.4
   },"filter":["in", "adm0_code", ""]
 
 }, 'grid_points_3');
+
+map.addLayer({
+  "id": "point_selecte_by_treshold",
+  "type": "circle",
+  "source": {
+      "type": "vector",
+      "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+      },
+  "source-layer": "points_3857_25112021",
+  'paint': {
+    // make circles larger as the user zooms from z12 to z22
+    'circle-radius': {
+      'base': 4,
+      'stops': [[1, 5], [6, 14]]
+    },
+  'circle-color': '#5eaabd',
+
+   'circle-opacity': 0.4
+},"filter":["in", "adm0_code", ""]
+
+}, 'grid_points_3');
+
+map.addLayer({
+"id": "point_selecte_by_treshold_prot",
+"type": "circle",
+"source": {
+    "type": "vector",
+    "tiles": ["https://geospatial.jrc.ec.europa.eu/geoserver/gwc/service/wmts?layer=dopa_analyst:points_3857_25112021&tilematrixset=EPSG:900913&Service=WMTS&Request=GetTile&Version=1.0.0&Format=application/x-protobuf;type=mapbox-vector&TileMatrix=EPSG:900913:{z}&TileCol={x}&TileRow={y}"]
+    },
+"source-layer": "points_3857_25112021",
+'paint': {
+  // make circles larger as the user zooms from z12 to z22
+  'circle-radius': {
+    'base': 4,
+    'stops': [[1, 5], [6, 14]]
+  },
+'circle-color': '#123943',
+
+ 'circle-opacity': 0.4
+},"filter":["in", "adm0_code", ""]
+
+}, 'grid_points_3');
+
+
+
+
 
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
@@ -1683,9 +1685,9 @@ setTimeout(function(){
         "<button type='button' class='btn btn-primary draw_custom'><i class='fas fa-draw-polygon'></i></button>"+ 
         "<button type='button' class='btn btn-secondary clean_custom'><i class='fas fa-trash-alt'></i></button>"+
         "<form action='#'><div class='input-field col s12'>"+
-        "<br><hr  style=' border-color: #000000!important;'><br><p calss='rank-text' style='color:white;font-size:20px; line-height: 32px;'>Select top-ranking areas</p>"+
+        "<br><hr  style=' border-color: #000000!important;'><br><p calss='rank-text' style='color:white;font-size:13px; text-align: center;  margin-top: -23px;'>Select top-ranking areas</p>"+
         "<p class='range-field range-field-treshold'><input type='range' id='treshold_slider' value ='0' min='0' max='30' /> <output id='treshold_value' style='color:#adc0c700!important;'> name='treshold_value'>0<span> %</span></output></p>"+
-        "<div id='planningarea' style='color: #dadada;     margin-top: 20px; font-size: 14px;'></div>"+
+        "<div id='planningarea' style='color: #b5b8b9; font-size: 20px; LINE-HEIGHT: 32PX;     font-family: 'Montserrat';'></div>"+
         "</div>"+
       "</form>");
         
@@ -2254,7 +2256,7 @@ var gianni = { fontawesome: 'fa fa-cog fa-spin fa-3x fa-fw', text: getRandomProp
           }else{
             
             $("#planningarea").show();
-            $("#planningarea").html("<br><div id='planningarea' style='color: #b5b8b9; font-size: 24px; LINE-HEIGHT: 34PX; FONT-FAMILY: 'Montserrat';'>"+ 
+            $("#planningarea").html("<br><div id='planningarea' style='color: #b5b8b9; font-size: 20px; LINE-HEIGHT: 32PX;     font-family: 'Montserrat;'>"+ 
             "The area to be priositised according to your settings is equal to <span style='color: #5eaabd; font-weight:bold'> "+(score_treshold).toLocaleString()+"%</span> of the country's total area,"+
             " however, <span style='color: #206a7d; font-weight:bold'>"+perc_planningarea_prot+"%</span> of the area selected results already covered by protected and conserved areas."+
             "<br>According to the current conservation priority settings, <span style='color: #b76a29; font-weight:bold'>"+missingperc.toLocaleString()+"% </span> of "+cname[0]+"'s lands still need to be protected.</div><br>"

@@ -639,18 +639,31 @@ input[type=range]::-webkit-slider-runnable-track {
   }
   #custom_map_tools{
     position: absolute;
-      width: 175px;
-      /* height: 15px!important; */
-      left: 364px;
-      top: 10px;
+    width: 186px;
+    /* height: 15px!important; */
+    left: 364px;
+    top: 10px;
   }
   #dddd{
-    background: #1f2324!important;
+    background: #1f2324ed!important;
     border-bottom: 0px solid white!important;
     padding-top: 0px;
+
   
   }
-  ù.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  #btn_maps > button.btn.btn-primary.draw_rec_custom{
+    margin-left: 36px;
+    margin-top: 20px;
+  }
+  #btn_maps > button.btn.btn-primary.draw_custom{
+    margin-top: 20px;
+  }
+
+  #btn_maps > button.btn.btn-secondary.clean_custom{
+    margin-top: 20px;
+  }
+  
+  .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #1f2425!important;
     border-color: #202223!important;
@@ -666,16 +679,15 @@ input[type=range]::-webkit-slider-runnable-track {
   .btn:focus {
       outline: none;
   }
-    #btn_maps {
-  
-      padding: 3px;
-      background-color: #1f2324;
-      /* border-top: 2px solid #ffffffa8; */
-      border: 0px solid #ffffff;
-      margin-left: 17px;
-      width: 300px;
-
-    }
+  #btn_maps {
+    padding: 3px;
+    background-color: #1a1a1b;
+    /* border-top: 2px solid #ffffffa8; */
+    border: 0px solid #ffffff;
+    margin-left: 38px;
+    width: 202px;
+    height: 100%;
+}
     .map-overlay {
         position: absolute;
         width: 100%;
