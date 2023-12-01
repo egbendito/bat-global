@@ -25,6 +25,6 @@ The tool provides functions to dynamically update the map and related statistics
 Local spatial analysis can be also performed by selecting specific areas using the square or the polygon tools. In such a way the user can draw specific geometries, perform spatial queries and display the results in a spider chart. On the chart, one can visually analyse results and compare the selected area’s values with the ones related to the country’s lands and the ones corresponding to the country's protected areas.
 Finally the tool allows for exporting maps and charts as images or PDF.
 
-[Start using the Conservation Analyst][https://www.google.com](https://lucageo.github.io/BAT-GLOBAL/bat.html)
+[Start using the Conservation Analyst](https://lucageo.github.io/BAT-GLOBAL/bat.html)
 
 ![map](https://raw.githubusercontent.com/lucageo/BAT-GLOBAL/main/img/app2.png)
